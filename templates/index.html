@@ -13,52 +13,6 @@
   <body>
     <h2 id="timer" style="visibility: hidden">Time remaining: 5 seconds</h2>
     <textarea id="textArea" placeholder="Type something..."></textarea>
-    <script>
-      let timer;
-      let countdown;
-      const textArea = document.getElementById("textArea");
-      const timerElement = document.getElementById("timer");
-
-      textArea.addEventListener("input", () => {
-        clearTimeout(timer);
-        clearInterval(countdown);
-        timerElement.style.visibility = "hidden"; // Hide the timer initially
-        timerElement.style.color = "black"; // Reset the color
-        let timeLeft = 10; // Set the countdown time
-
-        timer = setTimeout(() => {
-          const textContent = textArea.value;
-          console.log("User stopped typing");
-
-          fetch("/user_stopped_typing", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ text: textContent }),
-          })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error("Error:", error));
-        }, 10000);
-
-        countdown = setInterval(() => {
-          timeLeft--;
-          if (timeLeft > 0) {
-            timerElement.style.visibility = "visible";
-            timerElement.textContent = `Time remaining: ${timeLeft}`;
-            if (timeLeft <= 3) {
-              timerElement.style.color = "red";
-            } else if (timeLeft < 7) {
-              timerElement.style.color = "orange";
-            }
-          } else {
-            clearInterval(countdown);
-            timerElement.textContent = "Time's up!";
-            textArea.value = "";
-          }
-        }, 1000);
-      });
-    </script>
+    <script src="{{ url_for('static', filename='scripts/scripts.js') }}"></script>
   </body>
 </html>
