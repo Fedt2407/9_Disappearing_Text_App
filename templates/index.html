@@ -23,7 +23,8 @@
         clearTimeout(timer);
         clearInterval(countdown);
         timerElement.style.visibility = "hidden"; // Hide the timer initially
-        let timeLeft = 5; // Set the countdown time
+        timerElement.style.color = "black"; // Reset the color
+        let timeLeft = 10; // Set the countdown time
 
         timer = setTimeout(() => {
           const textContent = textArea.value;
@@ -46,9 +47,15 @@
           if (timeLeft > 0) {
             timerElement.style.visibility = "visible";
             timerElement.textContent = `Time remaining: ${timeLeft}`;
+            if (timeLeft <= 3) {
+              timerElement.style.color = "red";
+            } else if (timeLeft < 7) {
+              timerElement.style.color = "orange";
+            }
           } else {
             clearInterval(countdown);
             timerElement.textContent = "Time's up!";
+            textArea.value = "";
           }
         }, 1000);
       });
